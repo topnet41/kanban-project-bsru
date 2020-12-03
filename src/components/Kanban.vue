@@ -20,12 +20,12 @@
           </div>
         </div>
         <div
-          class="drop_zone"
-          @dragenter.prevent="drop_zone_enter"
-          @dragleave.prevent="drop_zone_leave"
-          @dragover.prevent
-        ></div>
-
+            class="drop_zone"
+            @dragenter.prevent="drop_zone_enter"
+            @dragleave.prevent="drop_zone_leave"
+            @dragover.prevent
+            @drop="drop_item(index, task_index)"
+          ></div>
         <div class="create-task" @click="create_task(index)">+ Create Task</div>
       </div>
     </div>
@@ -43,17 +43,15 @@
 export default {
   methods: {
     create_task(index) {
-      this.$refs["create-task-modal"].show();
       this.current_column_index = index;
+      this.$refs["create-task-modal"].show();
     },
     submit_create_task() {
-      this.create_task_submit(this.current_column_index, {
-        task_name: this.task_name,
-      });
+      this.create_task_submit(this.current_column_index,{task_name: this.task_name});
     },
     start_move(task_index, colum_index) {
-      this.current_colum_index = colum_index;
-      this.create_task_submit = task_index;
+      this.current_column_index = colum_index
+      this.current_task_index = task_index
     },
     drop_zone_enter(event) {
       event.target.style.height = "100px";
@@ -64,6 +62,14 @@ export default {
       event.target.style.height = "10px";
       event.target.style.borderStyle = "none";
       event.target.style.transition = "height 0.5s";
+    },
+    drop_item(colum_index, task_index){
+      this.move_item_task(
+          this.current_column_index,
+          this.current_task_index,
+          colum_index,
+          task_index
+      );
     },
   },
   data() {
@@ -76,6 +82,7 @@ export default {
   props: {
     data: Array,
     create_task_submit: Function,
+    move_item_task: Function,
   },
 };
 </script>
