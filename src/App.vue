@@ -1,18 +1,39 @@
 <template>
   <div id="app">
-    <Kanban/>
+    <Kanban :data="data"/>
   </div>
 </template>
 
 <script>
-import Kanban from './components/Kanban.vue'
+import Kanban from "./components/Kanban.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Kanban
-  }
-}
+    Kanban,
+  },
+  data() {
+    return {
+      data: [
+        {
+          name: "todo",
+          color: "#3e84c9",
+          tasks:[]
+        },
+        {
+          name: "doing",
+          color: "#a062c4",
+          tasks:[]
+        },
+        {
+          name: "done",
+          color: "#e03487",
+          tasks:[]
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
